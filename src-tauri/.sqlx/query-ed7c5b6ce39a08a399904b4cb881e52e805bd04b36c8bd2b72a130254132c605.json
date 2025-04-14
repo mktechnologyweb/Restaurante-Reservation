@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE employees SET name_employee = ?, lastname_employee = ?, position_employee = ? WHERE id_employee = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "ed7c5b6ce39a08a399904b4cb881e52e805bd04b36c8bd2b72a130254132c605"
+}

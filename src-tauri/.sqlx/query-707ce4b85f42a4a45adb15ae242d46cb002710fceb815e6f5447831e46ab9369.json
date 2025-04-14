@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT m.id_tables\n        FROM tables m\n        WHERE m.quantity_chairs >= ?\n          AND m.id_tables NOT IN (\n              SELECT r.table_id\n              FROM reservations r\n              WHERE r.date_reservation = ?\n                AND r.time_reservation = ?\n                AND r.status != 'Cancelada'\n                AND r.id_reservation != ?\n          )\n        LIMIT 1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_tables",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "707ce4b85f42a4a45adb15ae242d46cb002710fceb815e6f5447831e46ab9369"
+}

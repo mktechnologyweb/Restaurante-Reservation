@@ -1,0 +1,60 @@
+.detalhes-container {
+    width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+   align-self: center;
+}
+
+.detalhes-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.detalhes-form label {
+    text-align: left;
+}
+
+.detalhes-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.detalhes-form .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detalhes-form .button-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    
+}
+
+.detalhes-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.detalhes-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.detalhes-form .edit-button {
+    background-color: #1785B4;
+    color: white;
+}
+
+.detalhes-form .cancel-button {
+    background-color: #528891;
+    color: white;
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO customers (cpf_customer, name_customer, last_name_customer, telephone_customer, email_customer) VALUES (?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "2ef13e660a75b84807cae0ab0f448383538c3a17a40449a1e8ef0e1e70f8dbf8"
+}

@@ -1,0 +1,36 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT m.id_tables, m.quantity_chairs\n        FROM tables m\n        WHERE m.quantity_chairs >= ?\n        AND m.id_tables NOT IN (\n            SELECT r.table_id\n            FROM reservations r\n            WHERE r.date_reservation = ?\n            AND r.status = 'ativa'\n            AND (\n                (r.time_reservation BETWEEN ? AND ?)\n                OR (? BETWEEN r.time_reservation AND ADDTIME(r.time_reservation, '01:59:00'))\n            )\n        )\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_tables",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "quantity_chairs",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "abe8422da2ecb7c5ef77e3ed643c298698467f9685195c5aed7d958904db5ace"
+}

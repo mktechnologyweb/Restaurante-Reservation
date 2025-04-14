@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE reservations SET status = 'Cancelada' WHERE id_reservation = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "95b0b65dbd1a7cff7655ea151ce25d0fb50689eabcb7c346dabe8e00784fefe5"
+}

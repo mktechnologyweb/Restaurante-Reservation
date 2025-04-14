@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "DELETE FROM operating_hours WHERE day_of_week = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "52a1129d371b4da1a21e6fabecfcb33e982874596c013b6f1ec7e1c6ead0179c"
+}

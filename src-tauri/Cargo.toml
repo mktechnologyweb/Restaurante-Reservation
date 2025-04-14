@@ -1,0 +1,43 @@
+[package]
+name = "reservas"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "reservas_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[dependencies]
+# Tauri
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+bigdecimal = "0.4"
+
+
+# Regex (validação de senha)
+regex = "1"
+
+# Banco de dados MySQL com suporte a runtime Tok.io
+sqlx = { version = "0.7", features = ["mysql", "runtime-tokio", "chrono", "bigdecimal"] }
+
+# Programação assíncrona
+tokio = { version = "1", features = ["full"] }
+
+# Serialização
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Datas e horas
+chrono = { version = "0.4", features = ["serde"] }
+
+# Números de alta precisão
+num-traits = "0.2"
+
+# Criptografia de senhas
+argon2 = "0.5"
+rand_core = "0.6"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        INSERT INTO reservations (\n            date_reservation,\n            time_reservation,\n            number_people,\n            name_customer,\n            telephone_customer,\n            email_customer,\n            customer_id,\n            status,\n            table_id\n        )\n        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 9
+    },
+    "nullable": []
+  },
+  "hash": "05fd9e960efa746e9230851474bb420000de9c09535cce3b24f148672b1c1c86"
+}

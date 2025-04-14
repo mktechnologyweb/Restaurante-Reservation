@@ -1,0 +1,81 @@
+.client-details-container {
+    background-color: #ffffff62;
+    padding: 66px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: 15fr 5fr;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.data-item {
+    text-align: left;
+}
+
+.button-group {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+}
+
+.button-group button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-button,.save {
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.reserve-button {
+    background-color: #1785B4;
+    color: white;
+}
+
+.cancel {
+    width: 40%;
+    height: 35px;
+    background-color: #1785B4;
+    border: none;
+    color: white;
+}
+.edit-button,.save {
+    width: 50%;
+    background-color: #528891;
+    color: white;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.btn-details{
+    background-color: #41aeed;
+    width: 20%;
+    color: #fff;
+    border: none;
+ }

@@ -1,0 +1,36 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT opening_time, closing_time FROM operating_hours WHERE LOWER(day_of_week) = LOWER(?)",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "opening_time",
+        "type_info": {
+          "type": "Time",
+          "flags": "BINARY",
+          "char_set": 63,
+          "max_size": 10
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "closing_time",
+        "type_info": {
+          "type": "Time",
+          "flags": "BINARY",
+          "char_set": 63,
+          "max_size": 10
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      true,
+      true
+    ]
+  },
+  "hash": "2c78da6e18eeb2ca9f9973e16323d18afd524a6b46c63e3cbe65cc7977a80dbc"
+}

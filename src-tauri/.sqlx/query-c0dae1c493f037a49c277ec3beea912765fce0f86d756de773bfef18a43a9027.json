@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE reservations SET status = 'Concluída' WHERE id_reservation = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "c0dae1c493f037a49c277ec3beea912765fce0f86d756de773bfef18a43a9027"
+}

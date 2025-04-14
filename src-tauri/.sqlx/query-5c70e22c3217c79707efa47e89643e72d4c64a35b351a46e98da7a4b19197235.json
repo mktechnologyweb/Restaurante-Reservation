@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "DELETE FROM employees WHERE id_employee = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "5c70e22c3217c79707efa47e89643e72d4c64a35b351a46e98da7a4b19197235"
+}

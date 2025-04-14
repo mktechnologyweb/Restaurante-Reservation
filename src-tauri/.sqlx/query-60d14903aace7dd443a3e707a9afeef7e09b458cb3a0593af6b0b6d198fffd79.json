@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        UPDATE operating_hours\n        SET opening_time = ?, closing_time = ?\n        WHERE day_of_week = ?\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "60d14903aace7dd443a3e707a9afeef7e09b458cb3a0593af6b0b6d198fffd79"
+}

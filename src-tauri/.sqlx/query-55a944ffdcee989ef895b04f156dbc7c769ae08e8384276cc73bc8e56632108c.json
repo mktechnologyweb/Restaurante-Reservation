@@ -1,0 +1,58 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT id_employee, name_employee, lastname_employee, position_employee FROM employees",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_employee",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "name_employee",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "lastname_employee",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "position_employee",
+        "type_info": {
+          "type": "String",
+          "flags": "NOT_NULL | ENUM | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 52
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "55a944ffdcee989ef895b04f156dbc7c769ae08e8384276cc73bc8e56632108c"
+}

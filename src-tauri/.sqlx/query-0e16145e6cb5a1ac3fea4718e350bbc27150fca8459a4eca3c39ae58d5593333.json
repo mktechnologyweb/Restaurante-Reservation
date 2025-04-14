@@ -1,0 +1,124 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT \n            r.id_reservation, \n            CAST(r.date_reservation AS CHAR) as date_reservation, \n            CAST(r.time_reservation AS CHAR) as time_reservation, \n            r.number_people, \n            r.name_customer, \n            r.telephone_customer, \n            r.email_customer, \n            r.customer_id,\n            r.status,\n            r.table_id\n        FROM reservations r \n        JOIN customers c ON r.customer_id = c.id_customer \n        WHERE c.cpf_customer = ?\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_reservation",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "date_reservation",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 40
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "time_reservation",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 40
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "number_people",
+        "type_info": {
+          "type": "Long",
+          "flags": "",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "name_customer",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 1020
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "telephone_customer",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 80
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "email_customer",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 1020
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "customer_id",
+        "type_info": {
+          "type": "Long",
+          "flags": "MULTIPLE_KEY",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "status",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 80
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "table_id",
+        "type_info": {
+          "type": "Long",
+          "flags": "MULTIPLE_KEY",
+          "char_set": 63,
+          "max_size": 11
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "0e16145e6cb5a1ac3fea4718e350bbc27150fca8459a4eca3c39ae58d5593333"
+}

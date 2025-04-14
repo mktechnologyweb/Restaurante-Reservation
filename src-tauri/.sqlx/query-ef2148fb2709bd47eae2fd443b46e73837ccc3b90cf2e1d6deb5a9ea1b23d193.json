@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO employees (name_employee, lastname_employee, position_employee, password_employee) VALUES (?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "ef2148fb2709bd47eae2fd443b46e73837ccc3b90cf2e1d6deb5a9ea1b23d193"
+}

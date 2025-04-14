@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        UPDATE reservations\n        SET date_reservation = ?, time_reservation = ?, number_people = ?, name_customer = ?,\n            telephone_customer = ?, email_customer = ?, status = ?, table_id = ?\n        WHERE id_reservation = ?\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 9
+    },
+    "nullable": []
+  },
+  "hash": "351ffa05958c5b28196f2cd0cd9e84bb05c5798c50e5de6cfc9718f7a5a01f56"
+}

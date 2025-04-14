@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "DELETE FROM customers WHERE id_customer = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "13e1d7bb7ce31efb0f43fba0a4c3772b175aeb2f5b9594e5764b144affd8f6f5"
+}

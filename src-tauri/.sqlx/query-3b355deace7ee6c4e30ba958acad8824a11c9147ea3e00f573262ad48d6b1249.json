@@ -1,0 +1,47 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT id_tables, tipo_tables, quantity_chairs FROM tables",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_tables",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "tipo_tables",
+        "type_info": {
+          "type": "String",
+          "flags": "ENUM",
+          "char_set": 224,
+          "max_size": 72
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "quantity_chairs",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      true,
+      false
+    ]
+  },
+  "hash": "3b355deace7ee6c4e30ba958acad8824a11c9147ea3e00f573262ad48d6b1249"
+}

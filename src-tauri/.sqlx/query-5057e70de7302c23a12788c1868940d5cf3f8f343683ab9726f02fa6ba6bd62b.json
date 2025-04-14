@@ -1,0 +1,47 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT day_of_week,\n               COALESCE(opening_time, '') AS opening_time,\n               COALESCE(closing_time, '') AS closing_time\n        FROM operating_hours\n        ORDER BY\n          CASE day_of_week\n            WHEN 'Domingo' THEN 1\n            WHEN 'Segunda-feira' THEN 2\n            WHEN 'Terça-feira' THEN 3\n            WHEN 'Quarta-feira' THEN 4\n            WHEN 'Quinta-feira' THEN 5\n            WHEN 'Sexta-feira' THEN 6\n            WHEN 'Sábado' THEN 7\n            ELSE 8\n          END\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "day_of_week",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | PRIMARY_KEY | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 80
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "opening_time",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 40
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "closing_time",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 40
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "5057e70de7302c23a12788c1868940d5cf3f8f343683ab9726f02fa6ba6bd62b"
+}

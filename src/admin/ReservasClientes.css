@@ -1,0 +1,133 @@
+.reservas-clientes-container {
+    width: 790px;
+    height: auto;
+    margin: auto;
+    padding: 20px;
+    align-self: center;
+    background-color:#ffffffa6;
+}
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.filtros input,
+.filtros select,
+.filtros label {
+    font-size: 12px; 
+    padding: 5px 10px; 
+    margin: 0; 
+    height: 30px; 
+}
+
+.filtros label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.reservas-table {
+   
+    border-collapse: collapse;
+}
+
+.reservas-table th,
+.reservas-table td {
+    border: 1px solid #237eba28;
+      text-align: center;
+      background-color: #b3e5fa88;
+}
+
+.reservas-table th {
+    background-color: #237ebab0;
+    color: #f2f2f2;
+}
+
+
+.actions-cell {
+    display: flex;
+    justify-content: center; 
+    gap: 8px; 
+}
+
+
+
+
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 100px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content label {
+    margin-top: 10px;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-actions button {
+    margin-left: 10px;
+    padding: 8px 50px;
+   
+    
+}
+
+
+.edit{
+    background-color: #1785B4;
+    border: none;
+    color: #f2f2f2;
+}
+.edit:hover{
+
+    background-color: #14b3f7 ;
+}
+
+.canncel{
+    background-color: #528891;
+    border: none;
+    color: #f2f2f2;
+}
+.canncel:hover{
+
+    background-color: #1785B4 ;
+}
+
+.conclude{
+    background-color: #51a7b6;
+    border: none;
+    color: #f2f2f2;
+}
+.conclude:hover{
+
+    background-color: #528891 ;
+}

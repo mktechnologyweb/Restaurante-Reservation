@@ -1,0 +1,58 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT name_employee, password_employee, position_employee, is_first_login FROM employees WHERE name_employee = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "name_employee",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "password_employee",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 1020
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "position_employee",
+        "type_info": {
+          "type": "String",
+          "flags": "NOT_NULL | ENUM | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 52
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "is_first_login",
+        "type_info": {
+          "type": "Tiny",
+          "flags": "",
+          "char_set": 63,
+          "max_size": 1
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "73e7968220832dbeb02beb1139de2fc055fdf0541936a7b626c1934da5cb0f80"
+}

@@ -1,0 +1,36 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT time_reservation, COUNT(*) as total FROM reservations GROUP BY time_reservation ORDER BY total DESC LIMIT 1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "time_reservation",
+        "type_info": {
+          "type": "Time",
+          "flags": "BINARY",
+          "char_set": 63,
+          "max_size": 10
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "total",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | BINARY",
+          "char_set": 63,
+          "max_size": 21
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true,
+      false
+    ]
+  },
+  "hash": "ce4a36146977758514721e6b97ec408341a0caba28734c8c09e597da1444f9e4"
+}

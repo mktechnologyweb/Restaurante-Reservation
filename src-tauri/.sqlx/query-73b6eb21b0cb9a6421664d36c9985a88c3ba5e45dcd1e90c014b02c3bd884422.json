@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT COUNT(*) as count\n        FROM reservations\n        WHERE table_id = ?\n          AND date_reservation = ?\n          AND id_reservation != ?\n          AND status = 'ativa'\n          AND (\n              (time_reservation BETWEEN ? AND ?)\n              OR (? BETWEEN time_reservation AND ADDTIME(time_reservation, '01:59:00'))\n          )\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "count",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | BINARY",
+          "char_set": 63,
+          "max_size": 21
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "73b6eb21b0cb9a6421664d36c9985a88c3ba5e45dcd1e90c014b02c3bd884422"
+}

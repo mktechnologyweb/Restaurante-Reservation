@@ -1,0 +1,36 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT r.table_id as \"table_id?\", COUNT(*) as total\n        FROM reservations r\n        GROUP BY r.table_id\n        ORDER BY total DESC\n        LIMIT 1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "table_id?",
+        "type_info": {
+          "type": "Long",
+          "flags": "MULTIPLE_KEY",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "total",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | BINARY",
+          "char_set": 63,
+          "max_size": 21
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true,
+      false
+    ]
+  },
+  "hash": "cdb502a0c42c1660a1b6bb2c169017ef99f06c25d578fcd788e649304a1c6d91"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE tables SET tipo_tables = ?, quantity_chairs = ? WHERE id_tables = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "a21da8be1005d9d0f5e478c18f2465654b67c629352e9039f5c618a08820deb7"
+}

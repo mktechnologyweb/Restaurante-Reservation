@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO operating_hours (day_of_week, opening_time, closing_time) VALUES (?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "de62ea69dca8fc718970e105aed5b0bcbaa09c81411a5ddcd04f8835b3c7f726"
+}

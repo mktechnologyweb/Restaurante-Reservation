@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE customers SET cpf_customer = ?, name_customer = ?, last_name_customer = ?, telephone_customer = ?, email_customer = ? WHERE id_customer = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "4dfe05661a3d64bb69a6dc541accb59e0031b781b82c0e89224fe8fb1618a498"
+}

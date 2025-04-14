@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT password_employee FROM employees WHERE name_employee = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "password_employee",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 1020
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "6a20af14f328a97b2f31972d7d53602a4965860ad75d677bc091b5a04149b253"
+}

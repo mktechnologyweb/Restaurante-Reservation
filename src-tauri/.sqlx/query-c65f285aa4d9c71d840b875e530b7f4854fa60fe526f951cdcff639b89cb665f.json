@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO tables (tipo_tables, quantity_chairs) VALUES (?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "c65f285aa4d9c71d840b875e530b7f4854fa60fe526f951cdcff639b89cb665f"
+}
