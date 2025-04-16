@@ -1,23 +1,42 @@
+
+// Este Importe permite o gerenciaamento do estado do componente.
 import { useState } from 'react';
+
+// Este Importe permite a navegação entre as páginas.
 import { Link, useNavigate } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import './Home.css';
 import './Cadastrar.css';
 
+//Define o componente 
 function Cadastrar() {
+
+    //Obtem a função e navega entre as paginas
     const navigate = useNavigate();
+
+    //Recupera os dados do usuario
     const employeeName = localStorage.getItem("employeeName") || "Usuário";
-    const employeePosition = localStorage.getItem("employeePosition") || ""; // Obtém a posição do funcionário
+    const employeePosition = localStorage.getItem("employeePosition") || "";
+
+    //Declara a inicialização dos dados 
     const [cpf, setCpf] = useState('');
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
 
+    //Função para enviar o formulário
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        //Lida com os erros no rust
         try {
+
+            //Busca a função no rust e envia os parametros para atualizar
             const result = await invoke('cadastrar_cliente', { cpf, nome, sobrenome, telefone, email });
             if (result.success) {
                 alert(result.message);
@@ -35,12 +54,14 @@ function Cadastrar() {
         }
     };
 
+    //Funçao para remover os dados do funcionario para poder deslogar
     function handleLogout() {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     }
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">
@@ -54,11 +75,11 @@ function Cadastrar() {
             <div className="main-content">
                 <aside className="sidebar">
                     <nav className="navigation">
-                         {employeePosition === "Administrador" && (
-                                                    <>
-                                                       <Link to="/admin/dashboard">Daschboard</Link>
-                                                    </>
-                                                )}
+                        {employeePosition === "Administrador" && (
+                            <>
+                                <Link to="/admin/dashboard">Daschboard</Link>
+                            </>
+                        )}
                         <Link to="/home">Buscar Clientes</Link>
                         <Link to="/cadastrar">Cadastrar</Link>
                         {employeePosition === "Administrador" && (

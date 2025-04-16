@@ -1,17 +1,33 @@
+
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import { useEffect, useState } from "react";
+
+// Este Importe permite a navegação entre as páginas.
 import { Link, useNavigate } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import '../Home.css';
 import '../Cadastrar.css';
 import './lista_funcionarios.css';
 
+//Define o componente 
 function ListarFuncionario() {
+
+    //Obtem a função e navega entre as paginas
     const navigate = useNavigate();
+
+    //Recupera os dados do usuario
     const employeeName = localStorage.getItem("employeeName") || "Usuário";
     const employeePosition = localStorage.getItem("employeePosition") || "";
 
+    //Declara a inicialização dos dados 
     const [funcionarios, setFuncionarios] = useState([]);
     const [editando, setEditando] = useState(null);
+
+    //Declara a inicialização do estado do formulario 
     const [formData, setFormData] = useState({
         name: "",
         lastname: "",
@@ -19,14 +35,18 @@ function ListarFuncionario() {
         password: "",
     });
 
+    //Busca os funcionarios e monta o estado
     useEffect(() => {
         carregarFuncionarios();
     }, []);
 
+    //Busca  os funcionarios
     const carregarFuncionarios = async () => {
+         //Lida com os erros no rust
         try {
+              //Busca a função no rust 
             const result = await invoke("listar_usuarios");
-            setFuncionarios(result); // <- Precisa ser uma lista com os campos certos
+            setFuncionarios(result);
         } catch (error) {
             console.error("Erro ao carregar funcionários:", error);
         }
@@ -38,7 +58,7 @@ function ListarFuncionario() {
             name: func.name_employee,
             lastname: func.lastname_employee,
             position: func.position_employee,
-            password: "", // Campo opcional
+            password: "",
         });
     };
 
@@ -47,8 +67,12 @@ function ListarFuncionario() {
         setFormData({ name: "", lastname: "", position: "", password: "" });
     };
 
+    //Função para salvar 
     const salvarEdicao = async () => {
+
+        //Lida com os erros no rust
         try {
+             //Busca a função no rust 
             const response = await invoke("editar_usuario_command", {
                 idEmployee: editando,
                 nameEmployee: formData.name,
@@ -69,9 +93,14 @@ function ListarFuncionario() {
             alert("Erro ao atualizar funcionário.");
         }
     };
+
+    //Função para exluir 
     const excluirFuncionario = async (id) => {
+        //Pergunta se vai mesmo excluir
         if (window.confirm("Tem certeza que deseja excluir este funcionário?")) {
+            //Lida com os erros no rust
             try {
+                //Busca a função no rust 
                 const response = await invoke("excluir_usuario_command", {
                     idEmployee: id,
                 });
@@ -89,12 +118,14 @@ function ListarFuncionario() {
         }
     };
 
+    //Funçao para remover os dados do funcionario para poder deslogar
     function handleLogout() {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     }
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">
@@ -194,7 +225,7 @@ function ListarFuncionario() {
                                                 }
                                             />
                                         ) : (
-                                            "••••••" // ou "" se quiser deixar em branco
+                                            "••••••" 
                                         )}
                                     </td>
                                     <td>

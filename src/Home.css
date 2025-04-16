@@ -1,3 +1,4 @@
+/* Css global para html e body */
 html, body {
   margin: 0;
   padding: 0;
@@ -9,10 +10,12 @@ html, body {
   background: linear-gradient(to top, #A7D4E7, #D9F0F8, #FBFCFE);
 }
 
+/* Vai garantir que box-sizing seja heradado para todos o elementos*/
 *, *::before, *::after {
   box-sizing: inherit;
 }
 
+/* Container principal */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -23,6 +26,7 @@ html, body {
   
 }
 
+/* Aqui é o cabeçalho da pagina */
 .header {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -33,10 +37,12 @@ html, body {
   color: #18343B;
 }
 
+/* Ajuste de posicionamento */
 .header-placeholder {
   grid-column: 1 / 2;
 }
 
+/* posoição do titulo */
 .welcome-title {
   grid-column: 2 / 3;
   text-align: center;
@@ -45,6 +51,7 @@ html, body {
   margin: 0;
 }
 
+/* Posição e formatação do botão logout */
 .logout-button {
   grid-column: 3 / 4;
   justify-self: end;
@@ -56,12 +63,13 @@ html, body {
   padding: 0.3rem 0.8rem;
   border-radius: 4px;
 }
-
+/* muda a cor ao passar o mouse no botão logout */
 .logout-button:hover {
   background-color:#2d9ecf;
  
 }
 
+/* define o conteudo principal depois do cabeçalho */
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -69,6 +77,7 @@ html, body {
   overflow: hidden; 
 }
 
+/* Define a barra lateral */
 .sidebar {
   width: 220px;
   background-color: #AFD8EA;
@@ -81,12 +90,15 @@ html, body {
   overflow: hidden;
  
 }
+/* Caracteristicas da logo */
 .logo {
   width: 100px;
   height: auto;
   align-self: center;
   margin-top: 20px;
 }
+
+/* Aquie é area do conteudo principal */
 .content-area {
   flex-grow: 1;
   padding: 2rem;
@@ -96,10 +108,11 @@ html, body {
   overflow-y: auto;
   height: 100%;
 }
+/* configuração dos links */
 .navigation {
   width: 100%;
 }
-
+/* configuração dos links */
 .navigation a {
   display: block;
   padding: 0.8rem 1rem;
@@ -109,12 +122,13 @@ html, body {
   border-radius: 4px;
   margin-bottom: 0.5rem;
 }
-
+/* configuração dos links muda a cor ao passar o mouse */
 .navigation a:hover {
   background-color: #d5ecf6;
   color: #18343B;
 }
 
+/* configuração do conteudo principal a direita */
 .content-right {
   flex-grow: 1;
   padding: 2rem;
@@ -126,6 +140,7 @@ html, body {
   height: 100%;
 }
 
+/* configuração do titulo principal */
 .content-right h1 {
   font-size: 1.8rem;
   color: #333;
@@ -133,7 +148,7 @@ html, body {
   text-align: center;
 }
 
-
+/* formulario que é feito a busca */
 .search-form {
   display: flex;
   flex-direction: column;
@@ -141,7 +156,7 @@ html, body {
   width: 100%;
   max-width: 700px;
 }
-
+/* grupo dos campos de entrada */
 .input-group {
   display: flex;
   justify-content: center;
@@ -151,6 +166,7 @@ html, body {
   flex-wrap: wrap;
 }
 
+/* configuração dos compos de entrada */
 .search-form input {
   padding: 0.8rem 1rem;
   border: none;
@@ -164,7 +180,7 @@ html, body {
 .search-form input::placeholder {
   color: #888;
 }
-
+/* configuração do botão */
 .search-form button {
   background-color: #2a90b9;
   color: white;

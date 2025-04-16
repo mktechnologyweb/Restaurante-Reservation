@@ -1,23 +1,41 @@
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import React, { useState, useEffect } from 'react';
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+// Este Importe permite a navegação entre as páginas.
 import { Link, useNavigate } from "react-router-dom";
+
+// Este Importa o modal.
 import Modal from 'react-modal';
+
+//Importa o css
 import './ReservasClientes.css';
 import '../Home.css';
 import '../Cadastrar.css';
 
+//Elemento raiz para o modal
 Modal.setAppElement('#root');
 
+//Define o componente 
 function ReservasClientes() {
+      //Obtem a função e navega entre as paginas
     const navigate = useNavigate();
+
+     //Recupera os dados do usuario
     const employeeName = localStorage.getItem("employeeName") || "Usuário";
     const employeePosition = localStorage.getItem("employeePosition") || "";
+
+    //Declara a inicialização dos dados 
     const [mesasDisponiveis, setMesasDisponiveis] = useState([]);
     const [reservasClientes, setReservasClientes] = useState([]);
     const [filtroData, setFiltroData] = useState('');
     const [filtroHorario, setFiltroHorario] = useState('');
     const [filtroMesa, setFiltroMesa] = useState('');
     const [reservaEditando, setReservaEditando] = useState(null);
+
+    //Declara a inicialização do estado do formulario de edição 
     const [formData, setFormData] = useState({
 
         date_reservation: '',
@@ -26,35 +44,44 @@ function ReservasClientes() {
         customer_id: '',
         id_table: '',
     });
-    console.log(formData)
+    //Estado do modal
     const [isModalOpen, setIsModalOpen] = useState(false);
+    //Estado para erros na edição
     const [erroEdicao, setErroEdicao] = useState("");
 
+    //Busca as reservas e monta o estado
     useEffect(() => {
         buscarReservasClientes();
     }, []);
 
+    //Função para buscara lista
     const buscarReservasClientes = async () => {
+        //Lida com os erros no rust
         try {
+            //Busca a função no rust 
             const reservas = await invoke("buscar_reservas_clientes_command");
             setReservasClientes(reservas);
         } catch (error) {
             console.error("Erro ao buscar reservas de clientes:", error);
         }
     };
+    //Busca as mesas e monta o estado quando os dados n de pessoas, hora, data, mudam
     useEffect(() => {
         const buscarMesas = async () => {
-
+            //Se algum campo estiver vazio não faz a busca
             if (!formData.date_reservation || !formData.time_reservation || !formData.number_people) return;
 
             const dataHora = `${formData.date_reservation}T${formData.time_reservation}`;
+            //Lida com os erros no rust
             try {
+                 //Busca a função no rust 
                 const mesas = await invoke("mesas_disponiveis_para_reserva_edicao", {
                     idReservation: reservaEditando?.id_reservation,
                     dateReservation: dataHora,
                     numberPeople: parseInt(formData.number_people)
                 });
-
+                
+                //atualiza o estado para mesas disponiveis
                 setMesasDisponiveis(mesas);
             } catch (error) {
                 console.error("Erro ao buscar mesas disponíveis:", error);
@@ -64,21 +91,25 @@ function ReservasClientes() {
         buscarMesas();
     }, [formData.date_reservation, formData.time_reservation, formData.number_people]);
 
+    //Filtra as mesas com base no filtro
     const filtrarReservas = () => {
         return reservasClientes.filter(reserva => {
+            //Verifica se os dados correspondem
             const dataCorreta = !filtroData || reserva.date_reservation === filtroData;
             const horarioCorreto = !filtroHorario || reserva.time_reservation === filtroHorario;
             const mesaCorreta = !filtroMesa || reserva.number_people === parseInt(filtroMesa, 10);
+            //Se as condições forem verdadeiras retorna 
             return dataCorreta && horarioCorreto && mesaCorreta;
         });
     };
-
+    //Limpa os filtros
     const limparFiltros = () => {
         setFiltroData('');
         setFiltroHorario('');
         setFiltroMesa('');
     };
 
+    //Função que prepara o preenchimento da reserva
     const editarReserva = (reserva) => {
         setReservaEditando(reserva);
         setFormData({
@@ -88,11 +119,16 @@ function ReservasClientes() {
             customer_id: reserva.customer_id,
             id_table: reserva.table_id,
         });
+        //abre o modal de edição
         setIsModalOpen(true);
     };
 
+    //Salva a edição
     const salvarEdicao = async () => {
+        
         try {
+
+            //Formata o horario
             const timeCompleto = formData.time_reservation.length === 5
                 ? formData.time_reservation + ":00"
                 : formData.time_reservation;
@@ -103,11 +139,19 @@ function ReservasClientes() {
                 number_people: parseInt(formData.number_people, 10),
             };
 
+            //Busca a função no rust    
             await invoke("editar_reserva_admin_command", { payload });
 
+            //Atualiza a lista de reservas 
             buscarReservasClientes();
+
+            //Limpa a reserva
             setReservaEditando(null);
+
+            //Fecha modal
             setIsModalOpen(false);
+
+            //Limpa erros
             setErroEdicao("");
         } catch (error) {
             console.error("Erro ao salvar edição:", error);
@@ -120,30 +164,46 @@ function ReservasClientes() {
             setErroEdicao(mensagem);
         }
     };
+
+    //Cancela a reserva
     const cancelarReserva = async (id) => {
+
+        
+        //Lida com os erros no rust
         try {
+            //Busca a função no rust 
             await invoke("cancelar_reserva_admin_command", { idReservation: id });
+
+            //Atualiza alista apos o cancelamento
             buscarReservasClientes();
         } catch (error) {
             console.error("Erro ao cancelar reserva:", error);
         }
     };
 
+    
+    //Conclui a reserva
     const concluirReserva = async (id) => {
+        
+        //Lida com os erros no rust
         try {
+            //Busca a função no rust 
             await invoke("concluir_reserva_admin_command", { idReservation: id });
+            //Atualiza alista
             buscarReservasClientes();
         } catch (error) {
             console.error("Erro ao concluir reserva:", error);
         }
     };
 
+   //Funçao para remover os dados do funcionario para poder deslogar
     function handleLogout() {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     }
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">

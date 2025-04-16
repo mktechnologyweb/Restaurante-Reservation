@@ -1,3 +1,4 @@
+/* container principal de detalhes */
 .client-details-container {
     background-color: #ffffff62;
     padding: 66px;
@@ -6,6 +7,7 @@
     
 }
 
+/* grid que organiza os dados */
 .data-grid {
     display: grid;
     grid-template-columns: 15fr 5fr;
@@ -13,16 +15,18 @@
     margin-bottom: 40px;
 }
 
+/* estilo para cada item */
 .data-item {
     text-align: left;
 }
 
+/* Agrupa os botoes */
 .button-group {
     display: flex;
     justify-content: start;
     gap: 20px;
 }
-
+/* esstilo geral dentro dos botoes */
 .button-group button {
     padding: 10px 25px;
     border: none;
@@ -30,17 +34,21 @@
     cursor: pointer;
 }
 
+/* Estilo para o botão salvar */
 .edit-button,.save {
     padding: 10px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* Estilo para o botão de fazer reserva */
 .reserve-button {
     background-color: #1785B4;
     color: white;
 }
 
+/* Estilo para o botão cancelar */
 .cancel {
     width: 40%;
     height: 35px;
@@ -48,12 +56,13 @@
     border: none;
     color: white;
 }
+/* Estilo especifico para o botão salvar */
 .edit-button,.save {
     width: 50%;
     background-color: #528891;
     color: white;
 }
-
+/* Configuração do modal */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -65,6 +74,7 @@
     z-index: 9999;
 }
 
+/* Configuração conteudo interno do modal */
 .modal-content {
     background: #fff;
     padding: 2rem;
@@ -73,6 +83,7 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
+/* Configuração do botão de detalhes da reserva */
 .btn-details{
     background-color: #41aeed;
     width: 20%;

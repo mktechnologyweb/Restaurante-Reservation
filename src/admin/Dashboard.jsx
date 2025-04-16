@@ -1,15 +1,32 @@
+
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import { useEffect, useState } from "react";
+
+// Este Importe permite a navegação entre as páginas.
 import { Link, useNavigate } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import './d.css';
+
+// Importa os componentes da biblioteca Recharts que cria gráficos
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from "recharts";
+
+//Define o componente 
 function Dashboard() {
+
+   //Obtem a função e navega entre as paginas
   const navigate = useNavigate();
+
+   //Recupera os dados do usuario
   const employeeName = localStorage.getItem("employeeName") || "Usuário";
   const employeePosition = localStorage.getItem("employeePosition") || "";
 
+  //Armazenar o estado das estatísticas do dashboard  
   const [stats, setStats] = useState({
     reservas_dia: 0,
     reservas_semana: 0,
@@ -19,19 +36,23 @@ function Dashboard() {
     capacidade_total: 0,
     capacidade_ocupada: 0,
   });
-
+  //Busca as estatísticas do dashboard
   useEffect(() => {
+      //Busca a função no rust 
     invoke("buscar_estatisticas_dashboard")
+      //Atualiza com os estados recebidos
       .then(setStats)
       .catch(console.error);
   }, []);
 
+  //Dados para o grafico
   const dadosGrafico = [
     { nome: "Hoje", total: stats.reservas_dia },
     { nome: "Semana", total: stats.reservas_semana },
     { nome: "Mês", total: stats.reservas_mes },
   ];
 
+  //Retorna a estrutura do jsx
   return (
     <div className="home-container">
       <header className="header">

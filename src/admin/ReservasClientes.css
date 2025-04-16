@@ -1,3 +1,5 @@
+
+/* Container principal de reservas */
 .reservas-clientes-container {
     width: 790px;
     height: auto;
@@ -7,6 +9,7 @@
     background-color:#ffffffa6;
 }
 
+/* Configuração do filtro */
 .filtros {
     display: flex;
     gap: 10px;
@@ -14,6 +17,7 @@
     align-items: center;
 }
 
+/* Configuração dentro filtro */
 .filtros input,
 .filtros select,
 .filtros label {
@@ -22,31 +26,32 @@
     margin: 0; 
     height: 30px; 
 }
-
+/* Configuração especifica para o filtro */
 .filtros label {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
+/* Configuração da tabela de reserva */
 .reservas-table {
    
     border-collapse: collapse;
 }
-
+/* Configuração dos estilos da tabela */
 .reservas-table th,
 .reservas-table td {
     border: 1px solid #237eba28;
       text-align: center;
       background-color: #b3e5fa88;
 }
-
+/* Configuração especifica para o cabeçalho*/
 .reservas-table th {
     background-color: #237ebab0;
     color: #f2f2f2;
 }
 
-
+/* Configuração das celulas de ação */
 .actions-cell {
     display: flex;
     justify-content: center; 
@@ -56,7 +61,7 @@
 
 
 
-
+/* Configuração do modal */
 .modal {
     position: absolute;
     top: 50%;
@@ -68,6 +73,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Configuração do overlay do modal */
 .overlay {
     position: fixed;
     top: 0;
@@ -79,21 +85,25 @@
     justify-content: center;
 }
 
+/* Configuração dentro do modal */
 .modal-content {
     display: flex;
     flex-direction: column;
 }
 
+/* Configuração das labels do modal */
 .modal-content label {
     margin-top: 10px;
 }
 
+/* Configuração das açoes do modal salvar e cancelar */
 .modal-actions {
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;
 }
 
+/* Configuração dos botoes salvar e cancelar */
 .modal-actions button {
     margin-left: 10px;
     padding: 8px 50px;
@@ -102,31 +112,40 @@
 }
 
 
+ /* Configuração dos botão salvar */
 .edit{
     background-color: #1785B4;
     border: none;
     color: #f2f2f2;
 }
+
+/* Configuração dos botão salvar ao passar o mouse */
 .edit:hover{
 
     background-color: #14b3f7 ;
 }
 
+/* Configuração dos botão cancelar */
 .canncel{
     background-color: #528891;
     border: none;
     color: #f2f2f2;
 }
+
+/* Configuração dos botão cancelar ao passar o mouse*/
 .canncel:hover{
 
     background-color: #1785B4 ;
 }
 
+/* Configuração dos botão concluir */
 .conclude{
     background-color: #51a7b6;
     border: none;
     color: #f2f2f2;
 }
+
+/* Configuração dos botão concluir ao passar o mouse*/
 .conclude:hover{
 
     background-color: #528891 ;

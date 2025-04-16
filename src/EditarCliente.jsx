@@ -1,12 +1,26 @@
+
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import React, { useEffect, useState } from "react";
+
+// Este Importe permite a navegação entre as páginas e acessa os parâmetros dinâmicos da URL
 import { useParams, useNavigate, Link } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import './Cadastrar.css';
 
+//Define o componente 
 function EditarCliente() {
+
+    //Obtem o objeto na rota atual
     const { id } = useParams();
+
+    //Obtem a função e navega entre as paginas
     const navigate = useNavigate();
 
+     // Definição do estado inicial para edição
     const [cliente, setCliente] = useState({
         name_customer: "",
         last_name_customer: "",
@@ -15,12 +29,19 @@ function EditarCliente() {
         email_customer: ""
     });
 
+     //Recupera os dados do usuario
     const employeeName = localStorage.getItem("employeeName") || "Usuário";
     const employeePosition = localStorage.getItem("employeePosition") || "";
 
+    //Carregar os dados do cliente e monta o componente.
     useEffect(() => {
+
+        //Função para carregar o cliente
         async function carregarCliente() {
+
+            //Lida com erros na chamada do rust
             try {
+                //Busca a função no rust com id
                 const dados = await invoke("buscar_cliente_por_id", { id: parseInt(id) });
                 setCliente(dados);
             } catch (error) {
@@ -32,14 +53,18 @@ function EditarCliente() {
         carregarCliente();
     }, [id]);
 
+    // Função para atualizar o estado cliente quando o formulário mudar.
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCliente((prev) => ({ ...prev, [name]: value }));
     };
-
+    // Função para enviar o formulário de edição.
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+         //Lida com erros na chamada do rust
         try {
+            //Busca a função no rust e envia os parametros
             await invoke("editar_cliente", {
                 idCliente: parseInt(id),
                 cpf: cliente.cpf_customer,
@@ -56,12 +81,14 @@ function EditarCliente() {
         }
     };
 
+    //Funçao para remover os dados do funcionario para poder deslogar
     const handleLogout = () => {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     };
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">

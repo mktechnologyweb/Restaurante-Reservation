@@ -1,7 +1,7 @@
-
+/* Inporta as fontes do google */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Jacques+Francois&display=swap');
 
-
+/* Configuração do container principal ele ocupa toda a tela */
 .container {
   position: fixed;
   top: 0;
@@ -13,7 +13,7 @@
   background-position: center;
 }
 
-
+/* Configuração para o conteudo que ficara sobre a imagem de fundo */
 .content {
   position: relative;
   z-index: 10;
@@ -25,10 +25,7 @@
   justify-content:baseline;
 }
 
-
-
-
-
+/* Configuração do titulo principal */
 .title {
   font-size: 2.60rem;
   font-family: 'Jacques Francois', serif;
@@ -36,7 +33,7 @@
   margin-bottom: 0.25rem;
 }
 
-
+/* Configuração do subtitulo principal */
 .subtitle {
   font-size: 1.50rem;
   font-family: 'Jacques Francois', serif;
@@ -44,14 +41,14 @@
   margin-top: 0.25rem;
 }
 
-
+/* Configuração do texto login */
 .login {
   font-size: 1.50rem;
   font-family: 'Jacques Francois', serif;
   color: #18343B;
 }
 
-
+/* Configuração do formulario de login */
 .form-container {
   background-color: #ffffff84;
   padding: 2.50rem;
@@ -62,7 +59,7 @@
   flex-direction:column;
 }
 
-
+/* Configuração dos inputs do formulario de login */
 input {
   width: 100%;
   padding: 0.75rem;
@@ -75,6 +72,7 @@ input {
   margin-bottom: 1rem;
 }
 
+/* Configuração do botão */
 .btn {
   width: 100%;
   height: 35px;
@@ -87,6 +85,7 @@ input {
   box-sizing: border-box;
 }
 
+/* Configuração do botão ao passar o mouse */
 .btn:hover {
   background-color: #32a8db;
 }

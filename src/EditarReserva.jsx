@@ -1,16 +1,32 @@
+
+// Este Importe permite a navegação entre as páginas e as informaçoes da url atual.
 import { Link, useNavigate, useLocation } from "react-router-dom";
+
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import { useState, useEffect } from "react";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import "./Home.css";
 import "./Cadastrar.css";
 
+//Define o componente 
 function EditarReserva() {
+     //Obtem a função e navega entre as paginas
     const navigate = useNavigate();
+
+    //Pega o objeto location para acessar o estado passado entre as paginas durante a navegação
     const location = useLocation();
+
+    //Recupera o estado passado
     const reserva = location.state?.reserva;
+
+    //Recupera os dados do usuario
     const employeeName = localStorage.getItem("employeeName") || "Usuário";
     const employeePosition = localStorage.getItem("employeePosition") || "";
-
+    //Declara a inicialização dos dados 
     const [dataHora, setDataHora] = useState(reserva?.date_reservation ? `${reserva.date_reservation}T${reserva.time_reservation}` : "");
     const [numeroPessoas, setNumeroPessoas] = useState(reserva?.number_people || "");
     const [nameCustomer, setNameCustomer] = useState(reserva?.name_customer || "");
@@ -22,32 +38,40 @@ function EditarReserva() {
     const [mesasDisponiveis, setMesasDisponiveis] = useState([]);
 
 
-
+    //Busca mesas disponiveis quando data, hora e numero de pessoas mudam
     useEffect(() => {
         const buscarMesas = async () => {
+            //Formata data e hora para o esperado pelo rust
             const dataFormatada = dataHora.length > 16 ? dataHora.slice(0, 16) : dataHora;
+            
+            //Verifica se os campos estão vazios
             if (!dataHora || !numeroPessoas) return;
 
+            //Lida com erros na chamada do rust
             try {
+                 //Busca a função no rust e envia os parametros
                 const mesas = await invoke("mesas_disponiveis_para_reserva_edicao", {
                     idReservation: reserva.id_reservation,
                     dateReservation: dataFormatada,
                     numberPeople: parseInt(numeroPessoas)
                 });
 
+                //Atualiza o estado se mesas disponiveis
                 setMesasDisponiveis(mesas);
             } catch (error) {
                 console.error("Erro ao buscar mesas disponíveis:", error);
             }
         };
 
+        //Aqui sera chamado a função buscarMesas
         buscarMesas();
     }, [dataHora, numeroPessoas]);
 
-
+    //Função para editar os dados
     const editarReserva = async () => {
 
         try {
+             //Formata data e hora para o esperado pelo rust
             const dataFormatada = dataHora.length > 16 ? dataHora.slice(0, 16) : dataHora;
             console.log("Enviando para backend:", {
                 id_reservation: reserva.id_reservation,
@@ -59,6 +83,7 @@ function EditarReserva() {
                 status: status,
                 tableId: table_id,
             });
+             //Busca a função no rust e envia os parametros para atualizar
             const resultado = await invoke("editar_reserva_command", {
 
                 idReservation: reserva.id_reservation,
@@ -87,18 +112,20 @@ function EditarReserva() {
                     tableId: table_id
                 };
 
-
+                //Recupera os dados do cliente selecionado
                 const clienteSelecionado = JSON.parse(localStorage.getItem("clienteSelecionado"));
+                //Busca pelo cpf
                 const cpf = clienteSelecionado?.[1];
                 console.log(clienteSelecionado)
+                //Se existir busca as reservas atualizadas
                 if (cpf) {
-
+                     //Busca a função no rust 
                     const reservasAtualizadas = await invoke("buscar_reservas_por_cpf", { cpf });
-
+                    //Atualiza localStorage
                     localStorage.setItem("reservasCliente", JSON.stringify(reservasAtualizadas));
                 }
 
-                // Navega com a reserva atualizada
+               //Vai para a pagina enviando os dados atualizados
                 navigate("/detalhes", { state: { reserva: reservaAtualizada } });
             } else {
                 setErroEdicao("Erro ao atualizar reserva: " + resultado.message);
@@ -108,18 +135,21 @@ function EditarReserva() {
         }
     };
 
+    //Funçaõ para finalizar o atendimento limpando os dados do cliente
     const handleFinalizarAtendimento = () => {
         localStorage.removeItem("clienteSelecionado");
         localStorage.removeItem("reservasCliente");
         navigate("/home");
     };
 
+    //Funçao para remover os dados do funcionario para poder deslogar
     function handleLogout() {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     }
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">
@@ -132,15 +162,15 @@ function EditarReserva() {
             <div className="main-content">
                 <aside className="sidebar">
                     <nav className="navigation">
-                         {employeePosition === "Administrador" && (
-                                                    <>
-                                                       <Link to="/admin/dashboard">Daschboard</Link>
-                                                    </>
-                                                )}
+                        {employeePosition === "Administrador" && (
+                            <>
+                                <Link to="/admin/dashboard">Daschboard</Link>
+                            </>
+                        )}
                         <Link to="/home">Buscar Clientes</Link>
                         <Link to="/cadastrar">Cadastrar</Link>
                         <Link to="/cliente-detalhes">Dados do cliente</Link>
-                         <Link onClick={handleFinalizarAtendimento}>Finalizar Atendimento</Link>
+                        <Link onClick={handleFinalizarAtendimento}>Finalizar Atendimento</Link>
                         {employeePosition === "Administrador" && (
                             <>
                                 <Link to="/admin/lista_clientes">Lista de clientes</Link>

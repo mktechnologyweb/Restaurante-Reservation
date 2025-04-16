@@ -1,18 +1,34 @@
+
+
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import React, { useState, useEffect } from 'react';
+
+// Este Importe permite a navegação entre as páginas.
 import { Link, useNavigate } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import './Home.css';
 
+//Define o componente home
 function Home() {
+
+    //Obtem a função e navega entre as paginas
     const navigate = useNavigate();
+
+    //Tras os dados do funcionario em localStorage
     const employeeName = localStorage.getItem("employeeName") || "Usuário";
     const employeePosition = localStorage.getItem("employeePosition") || "";
 
+    //Declaração e inicialização dos estados para busca dos clientes
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
     const [nome, setNome] = useState('');
     const [clienteEncontrado, setClienteEncontrado] = useState(false);
 
+    //Execução na montagem do componente
     useEffect(() => {
         const clienteSalvo = localStorage.getItem("clienteSelecionado");
         if (clienteSalvo) {
@@ -20,26 +36,43 @@ function Home() {
         }
     }, []);
 
+    //Função para buscar os clientes
     const handleBuscarCliente = async (e) => {
         e.preventDefault();
 
+        //Lida com erros na chamada do rust
         try {
+
+            //Busca a função no rust e envia os parametros
             const clienteDoBanco = await invoke('buscar_cliente', {
                 cpf: cpf || null,
                 telefone: telefone || null,
                 nome: nome || null
             });
 
+
+            //Verifica se o cliente foi encontrado nu rust
             if (clienteDoBanco) {
+
+
+                //Armazena no localstorage
                 localStorage.setItem("clienteSelecionado", JSON.stringify(clienteDoBanco));
+                
+                
+                //Indica que foi encontrado atualizando a função
                 setClienteEncontrado(true);
 
                 try {
+                    //Busca a função no rust e envia os parametros
                     const reservasDoBanco = await invoke('buscar_reservas_por_cpf', {
                         cpf: clienteDoBanco[1]
                     });
 
+
+                    //Armazena as reservas
                     localStorage.setItem("reservasCliente", JSON.stringify(reservasDoBanco));
+                    
+                    //Manda para a pagina
                     navigate("/cliente-detalhes");
 
                 } catch (error) {
@@ -55,20 +88,24 @@ function Home() {
         }
     };
 
+
+    //Funçaõ para finalizar o atendimento limpando os dados do cliente
     const handleFinalizarAtendimento = () => {
         localStorage.removeItem("clienteSelecionado");
         localStorage.removeItem("reservasCliente");
         setClienteEncontrado(false);
         alert("Atendimento finalizado.");
-        navigate("/home"); // Redireciona para a tela principal, se quiser
+        navigate("/home");
     };
 
+     //Funçao para remover os dados do funcionario para poder deslogar
     function handleLogout() {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     }
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">
@@ -81,9 +118,9 @@ function Home() {
             <div className="main-content">
                 <aside className="sidebar">
                     <nav className="navigation">
-                    {employeePosition === "Administrador" && (
+                        {employeePosition === "Administrador" && (
                             <>
-                               <Link to="/admin/dashboard">Daschboard</Link>
+                                <Link to="/admin/dashboard">Daschboard</Link>
                             </>
                         )}
                         <Link to="/home">Buscar Clientes</Link>

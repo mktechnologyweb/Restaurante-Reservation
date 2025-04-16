@@ -1,3 +1,4 @@
+/* Configuração do Container de detalhes */
 .detalhes-container {
     width: 800px;
     margin: 20px auto;
@@ -5,6 +6,7 @@
    align-self: center;
 }
 
+/* Fomulario de exibição e envio */
 .detalhes-form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; 
@@ -12,22 +14,26 @@
     margin-bottom: 20px;
 }
 
+/* Estilos dos campos do Fomulario de exibição e envio */
 .detalhes-form label {
     text-align: left;
 }
 
+/* Estilos dos campos de input Fomulario de exibição e envio */
 .detalhes-form input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
+/* Estilos para agrupar em colunas grid */
 .detalhes-form .form-row {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
+/* Estilos dos botoes */
 .detalhes-form .button-row {
     display: flex;
     justify-content: center;
@@ -36,12 +42,7 @@
     
 }
 
-.detalhes-form button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+/* Estilos geral dos botoes */
 .detalhes-form button {
     padding: 10px 20px;
     border: none;
@@ -49,11 +50,13 @@
     cursor: pointer;
 }
 
+/* Estilos do botoao de edição */
 .detalhes-form .edit-button {
     background-color: #1785B4;
     color: white;
 }
 
+/* Estilos do botoao de cancelamento */
 .detalhes-form .cancel-button {
     background-color: #528891;
     color: white;

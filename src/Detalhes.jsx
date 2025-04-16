@@ -1,8 +1,15 @@
+
+// Este Importe permite a navegação entre as páginas e as informaçoes da url atual.
 import { Link, useNavigate, useLocation } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import './Home.css';
 import './Detalhes.css';
 
+//Define o componente 
 function Detalhes() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,28 +17,36 @@ function Detalhes() {
     const employeePosition = localStorage.getItem("employeePosition") || "";
     const reserva = location.state?.reserva;
 
+    //Funçao para remover os dados do funcionario para poder deslogar
     const handleLogout = () => {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("employeeName");
         navigate("/");
     };
 
+    //Funçaõ para finalizar o atendimento limpando os dados do cliente
     const handleFinalizarAtendimento = () => {
         localStorage.removeItem("clienteSelecionado");
         localStorage.removeItem("reservasCliente");
         navigate("/home");
     };
 
+    //Função para editar reserva
     const handleEditarReserva = () => {
         navigate('/editar-reserva', { state: { reserva: reserva } });
-       
+
     };
 
+    //Função para cancelar
     const cancelarReserva = async () => {
+
+        //Lida com os erros no rust
         try {
+            //Busca a função no rust
             const resultado = await invoke("cancelar_reserva_command", {
                 idReservation: reserva.id_reservation,
             });
+            //Busca se foi cancelada
             if (resultado.success) {
                 alert("Reserva cancelada com sucesso!");
                 navigate("/reserva");
@@ -43,6 +58,7 @@ function Detalhes() {
         }
     };
 
+    //Retorna a estrutura do jsx
     return (
         <div className="home-container">
             <header className="header">
@@ -55,15 +71,15 @@ function Detalhes() {
             <div className="main-content">
                 <aside className="sidebar">
                     <nav className="navigation">
-                         {employeePosition === "Administrador" && (
-                                                    <>
-                                                       <Link to="/admin/dashboard">Daschboard</Link>
-                                                    </>
-                                                )}
+                        {employeePosition === "Administrador" && (
+                            <>
+                                <Link to="/admin/dashboard">Daschboard</Link>
+                            </>
+                        )}
                         <Link to="/home">Buscar Clientes</Link>
                         <Link to="/cadastrar">Cadastrar</Link>
                         <Link to="/cliente-detalhes">Dados do cliente</Link>
-                         <Link onClick={handleFinalizarAtendimento}>Finalizar Atendimento</Link>
+                        <Link onClick={handleFinalizarAtendimento}>Finalizar Atendimento</Link>
                         {employeePosition === "Administrador" && (
                             <>
                                 <Link to="/admin/lista_clientes">Lista de clientes</Link>

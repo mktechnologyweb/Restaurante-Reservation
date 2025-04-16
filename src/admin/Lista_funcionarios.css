@@ -1,3 +1,5 @@
+
+/* Configura a tabela de funcionários */
 .tabela-funcionarios {
     width: 100%;
     border-collapse: collapse;
@@ -9,12 +11,13 @@
     overflow: hidden;
 }
 
-
+/* Configura para o cabeçalho da tabela de funcionários */
 .tabela-funcionarios thead {
     background-color: #0e639c;
     color: white;
 }
 
+/* Configura para o cabeçalho e celulas da tabela de funcionários */
 .tabela-funcionarios th,
 .tabela-funcionarios td {
     padding: 12px 16px;
@@ -22,12 +25,12 @@
     border-bottom: 1px solid #ddd;
 }
 
-
+/* Configura para linhas da tabela de funcionários */
 .tabela-funcionarios tbody tr:nth-child(even) {
     background-color: #f5f5f5;
 }
 
-
+/* Configura para o input e select da tabela de funcionários */
 .tabela-funcionarios input,
 .tabela-funcionarios select {
     width: 100%;
@@ -37,7 +40,7 @@
     border-radius: 4px;
 }
 
-
+/* Configura para o botão da tabela de funcionários */
 .tabela-funcionarios button {
     margin: 4px 4px 0 0;
     padding: 6px 12px;
@@ -47,22 +50,24 @@
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
-
+/* Configura para o botão da tabela de funcionários ao passar o mouse*/
 .tabela-funcionarios button:hover {
     opacity: 0.9;
 }
 
+/* Configura para o primeiro botão da tabela de funcionários*/
 .tabela-funcionarios button:nth-child(1) {
     background-color: #2a90b9; 
     color: white;
 }
 
+/* Configura para o segundo botão da tabela de funcionários*/
 .tabela-funcionarios button:nth-child(2) {
     background-color: #247b9e; 
     color: white;
 }
 
-
+/* Configura para telas menores*/
 @media (max-width: 768px) {
     .tabela-funcionarios {
         font-size: 14px;
@@ -79,6 +84,7 @@
     }
 }
 
+/* Configura para os elementos da classe*/
 .register,.re {
     margin: 2px;
     padding: 4px 8px;
@@ -90,7 +96,7 @@
     border: none;
 }
 
-
+/* Configura ao passar o mouse*/
 .register:hover,.re:hover {
     
     background-color:#0e639c;
@@ -98,6 +104,8 @@
     text-decoration: none;
     border: none;
 }
+
+/* Configura o botão*/
 button {
     margin: 2px;
     padding: 4px 8px;
@@ -106,6 +114,7 @@ button {
     
 }
 
+/* Configura o botão ao passar o mouse*/
 button:hover {
     opacity: 0.9;
 }

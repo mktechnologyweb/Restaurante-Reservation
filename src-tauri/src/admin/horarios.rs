@@ -1,8 +1,18 @@
-use sqlx::FromRow;
-use tauri::State;
+//Importa as característica para usar a struct Database
 use crate::Database;
-use serde::{Deserialize, Serialize};
 
+/* Importa as característica do Serialize da biblioteca serde
+ e permiti a conversão da estruturas em formatos json.*/ 
+use serde::Serialize;
+
+/* Importa as característica do FromRow da biblioteca sqlx e permiti
+ o mapeamento de linhas do banco de dados para estruturas.*/ 
+use sqlx::FromRow;
+
+//Importa o gerenciamento da aplicação
+use tauri::State;
+
+//Definição da estrutura do horario de funcionamento
 #[derive(FromRow, Serialize)]
 pub struct Horario {
     pub day_of_week: String,
@@ -10,11 +20,11 @@ pub struct Horario {
     pub closing_time: Option<String>,
 }
 
-
+//Função para listar os horarios
 #[tauri::command]
 pub async fn listar_horarios(db: State<'_, Database>) -> Result<Vec<Horario>, String> {
     let pool = db.pool.lock().await;
-
+    //Busca no banco
     let horarios = sqlx::query_as!(
         Horario,
         r#"
@@ -35,6 +45,8 @@ pub async fn listar_horarios(db: State<'_, Database>) -> Result<Vec<Horario>, St
           END
         "#
     )
+
+    //Obtem todos os horários
     .fetch_all(&*pool)
     .await
     .map_err(|e| format!("Erro ao listar horários: {}", e))?;
@@ -42,13 +54,7 @@ pub async fn listar_horarios(db: State<'_, Database>) -> Result<Vec<Horario>, St
     Ok(horarios)
 }
 
-#[derive(Debug, Deserialize)]
-pub struct AtualizarHorario {
-    pub day_of_week: String,
-    pub opening_time: String,
-    pub closing_time: String,
-}
-
+//Função para editar os horários
 #[tauri::command]
 pub async fn editar_horario(
     db: State<'_, Database>,
@@ -58,6 +64,7 @@ pub async fn editar_horario(
 ) -> Result<(), String> {
     let pool = db.pool.lock().await;
 
+    //Atualiza no banco
     sqlx::query!(
         r#"
         UPDATE operating_hours
@@ -75,13 +82,18 @@ pub async fn editar_horario(
     Ok(())
 }
 
+//Função para excluir os horários
 #[tauri::command]
 pub async fn excluir_horario(pool: State<'_, Database>, day_of_week: String) -> Result<(), String> {
     let pool = pool.pool.lock().await;
 
-    match sqlx::query!("DELETE FROM operating_hours WHERE day_of_week = ?", day_of_week)
-        .execute(&*pool)
-        .await
+    //Deleta no banco
+    match sqlx::query!(
+        "DELETE FROM operating_hours WHERE day_of_week = ?",
+        day_of_week
+    )
+    .execute(&*pool)
+    .await
     {
         Ok(_) => Ok(()),
         Err(e) => {
@@ -91,6 +103,7 @@ pub async fn excluir_horario(pool: State<'_, Database>, day_of_week: String) -> 
     }
 }
 
+//Função para cadastrar os horários
 #[tauri::command]
 pub async fn cadastrar_horario(
     pool: State<'_, Database>,
@@ -99,7 +112,8 @@ pub async fn cadastrar_horario(
     closing_time: String,
 ) -> Result<(), String> {
     let pool = pool.pool.lock().await;
-
+    
+    //Inceri no banco
     match sqlx::query!(
         "INSERT INTO operating_hours (day_of_week, opening_time, closing_time) VALUES (?, ?, ?)",
         day_of_week,

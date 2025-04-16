@@ -1,3 +1,4 @@
+//Bibliotecas necessarias para as funções
 use crate::database::Database;
 use sqlx::query;
 use tauri::State;
@@ -7,13 +8,14 @@ use serde::Serialize;
 
 
 
-
+//Esta estrutura representa os horarios de funcionamento
 #[derive(Serialize)]
 pub struct HorarioFuncionamento {
     pub opening_time: String,
     pub closing_time: String,
 }
 
+//Esta estrutura representa os dados de reserva
 #[derive(Serialize)]
 struct ReservaRecord {
     id_reservation: i32,
@@ -26,13 +28,16 @@ struct ReservaRecord {
     pub status: Option<String>,
 }
 
+//Aqui é a função de login do funcionário
 #[tauri::command]
 pub async fn login_command(
+    //Estado do banco
     db: State<'_, Database>,
     name_employee: String,
     password_employee: String,
 ) -> Result<serde_json::Value, String> {
     match db.login(name_employee, password_employee).await {
+        //Retorna um json com sucesso
         Ok(Some((employee_name, employee_position, is_first_login))) => {
             Ok(json!({
                 "success": true,
@@ -42,10 +47,12 @@ pub async fn login_command(
                 "isFirstLogin": is_first_login
             }))
         }
+        //Caso haja falha ao logar
         Ok(None) => Ok(json!({
             "success": false,
             "message": "Senha incorreta"
         })),
+        //Erros genericos
         Err(e) => Ok(json!({
             "success": false,
             "message": e.to_string()
@@ -53,7 +60,7 @@ pub async fn login_command(
     }
 }
 
-
+//Aqui é a função para trocar a senha 
 #[tauri::command]
 pub async fn alterar_senha_command(
     db: State<'_, Database>,
@@ -77,7 +84,7 @@ pub async fn alterar_senha_command(
 
 
 
-
+//Aqui é a função para cadastrar novos clientes
 #[tauri::command]
 pub async fn cadastrar_cliente(
     db: State<'_, Database>,
@@ -107,7 +114,7 @@ pub async fn cadastrar_cliente(
         }
     }
 }
-
+//Aqui é a função que busca o cliente pelo nome ou telefone ou cpf 
 #[tauri::command]
 pub async fn buscar_cliente(
     db: State<'_, Database>,
@@ -116,7 +123,7 @@ pub async fn buscar_cliente(
     nome: Option<String>,
 ) -> Result<serde_json::Value, String> {
     let pool = db.pool.lock().await;
-
+    //Busca um cliente no banco
     let mut query_str = "SELECT * FROM customers WHERE 1=1".to_string();
     let mut params: Vec<String> = Vec::new();
 
@@ -138,12 +145,12 @@ pub async fn buscar_cliente(
     }
 
     println!("Consulta SQL real: {} com valores {:?}", query_str, params);
-
+    //Busca com os parametros fornecidos
     let mut query = sqlx::query_as::<_, (i32, String, String, String, String, String)>(&query_str);
     for param in &params {
         query = query.bind(param);
     }
-
+    //Aqui é feito a busca co cliente
     let result = query.fetch_one(&*pool).await;
 
     match result {
@@ -169,7 +176,7 @@ pub struct Cliente {
     pub email_customer: String,
 }
 
-
+//Aqui é a função que vai listar os clientes cadastrados
 #[tauri::command]
 pub async fn listar_clientes(db: State<'_, Database>) -> Result<Vec<Cliente>, String> {
     
@@ -185,7 +192,7 @@ pub async fn listar_clientes(db: State<'_, Database>) -> Result<Vec<Cliente>, St
 
     Ok(clientes)
 }
-
+//Aqui é a função que busca um cliente pelo id
 #[tauri::command]
 pub async fn buscar_cliente_por_id(
     db: State<'_, Database>,
@@ -203,7 +210,7 @@ pub async fn buscar_cliente_por_id(
 
     result.map_err(|e| format!("Erro ao buscar cliente: {}", e))
 }
-
+//Aqui é a função para editar os dados do cliente
 #[tauri::command]
 pub async fn editar_cliente(
     db: State<'_, Database>,
@@ -237,7 +244,7 @@ pub async fn editar_cliente(
     }
 }
 
-
+//Aqui é a função que permite exluir um cliente
 #[tauri::command]
 pub async fn excluir_cliente(
     db: State<'_, Database>,
@@ -262,7 +269,7 @@ pub async fn excluir_cliente(
 }
 
 
-
+//Aqui é a função que busca as reservas pelo cpf
 #[tauri::command]
 pub async fn buscar_reservas_por_cpf(
     db: State<'_, Database>,
@@ -320,22 +327,21 @@ pub async fn buscar_reservas_por_cpf(
     }
 }
 
-
+//Aqui é a função para obter o horarario de funcionamento
 #[tauri::command]
 pub async fn obter_horario_funcionamento(
     db: State<'_, Database>,
-    dia_semana: String, // Recebe o dia (ainda vindo do JS, ex: "segunda-feira")
+    dia_semana: String,
 ) -> Result<HorarioFuncionamento, String> {
     let pool = db.pool.lock().await;
 
-    // Log para depuração: Ver o que está sendo recebido do JS
+    
     println!("Backend: Recebido para buscar horário: {}", dia_semana);
 
-    // *** MUDANÇA AQUI: Usar LOWER() na query SQL ***
-    // Compara a versão minúscula da coluna com a versão minúscula do parâmetro
+ 
     let result = sqlx::query!(
         "SELECT opening_time, closing_time FROM operating_hours WHERE LOWER(day_of_week) = LOWER(?)",
-        dia_semana // Passa o dia_semana como recebido (ex: "segunda-feira")
+        dia_semana 
     )
     .fetch_optional(&*pool)
     .await
@@ -366,12 +372,12 @@ pub async fn obter_horario_funcionamento(
         }
         None => {
             println!("Backend: Horário de funcionamento não encontrado no DB (via LOWER) para: {}", dia_semana);
-            // Retorna o nome como recebido do JS na mensagem de erro
+          
             Err(format!("Horário de funcionamento não encontrado para '{}'", dia_semana))
         }
     }
 }
-
+//Aqui é a função que busca a reserva 
 #[tauri::command]
 pub async fn buscar_reserva_command(
     db: State<'_, Database>,
@@ -402,14 +408,10 @@ pub async fn buscar_reserva_command(
     }
 }
 
-#[derive(Debug, Serialize)] 
-struct Mesa {
-    id_tables: i32,
-    quantity_chairs: i32,
-    tipo_tables: Option<String>,
-}
 
 
+
+//Aqui é a função que busca mesas disponiveis para ser feito a reserva
 #[tauri::command]
 pub async fn mesas_disponiveis_para_reserva(
     state: tauri::State<'_, Database>,
@@ -463,6 +465,7 @@ pub async fn mesas_disponiveis_para_reserva(
 
     Ok(mesas_json)
 }
+//Aqui é a função de criação da reserva
 #[tauri::command]
 pub async fn criar_reserva_command(
     db: State<'_, Database>,
@@ -474,7 +477,7 @@ pub async fn criar_reserva_command(
     email_customer: String,
     customer_id: i32,
     status: String,
-    table_id: i32, // AGORA recebendo a mesa diretamente
+    table_id: i32,
 ) -> Result<serde_json::Value, String> {
    
 
@@ -490,7 +493,7 @@ pub async fn criar_reserva_command(
     let time = NaiveTime::parse_from_str(&time_str, "%H:%M:%S")
         .map_err(|e| format!("Formato de hora inválido: {}", e))?;
 
-    // Verifica se a mesa já está ocupada nesse horário
+    
     let pool = db.inner().pool.lock().await;
 
     let duration_minutes = 120;
@@ -516,8 +519,10 @@ pub async fn criar_reserva_command(
     .fetch_optional(&*pool)
     .await
     .map_err(|e| format!("Erro ao verificar reservas existentes: {}", e))?;
-
-    // Realiza a reserva com a mesa informada
+    if reserva_existente.is_some() {
+    return Err("Já existe uma reserva ativa para essa mesa nesse horário.".to_string());
+    }
+    
     let insert_result = sqlx::query!(
         r#"
         INSERT INTO reservations (
@@ -555,7 +560,7 @@ pub async fn criar_reserva_command(
     }
 }
 
-
+//Aqui é a função que busca mesas disponiveis para editar a reserva
 #[tauri::command]
 pub async fn mesas_disponiveis_para_reserva_edicao(
     db: State<'_, Database>,
@@ -606,7 +611,7 @@ pub async fn mesas_disponiveis_para_reserva_edicao(
 
 
 
-
+//Aqui é a função de edição da reserva
 #[tauri::command]
 pub async fn editar_reserva_command(
     db: State<'_, Database>,
@@ -627,7 +632,7 @@ pub async fn editar_reserva_command(
     let start_time = datetime.time();
     let end_time = start_time + chrono::Duration::minutes(120);
 
-    // Verifica se a mesa ainda está disponível considerando intervalo
+    
     let conflito = sqlx::query!(
         "
         SELECT COUNT(*) as count
@@ -659,7 +664,7 @@ pub async fn editar_reserva_command(
         }));
     }
 
-    // Atualiza a reserva
+
     let result = sqlx::query!(
         "
         UPDATE reservations
@@ -689,7 +694,7 @@ pub async fn editar_reserva_command(
     }
 }
 
-
+//Aqui é a função para cancelar a reserva sem deletar do banco
 #[tauri::command]
 pub async fn cancelar_reserva_command(
     db: State<'_, Database>,
@@ -713,7 +718,7 @@ pub async fn cancelar_reserva_command(
     }
 }
 
-
+//Aqui é a função que busca o total de mesas reservadas
 #[tauri::command]
 pub async fn buscar_total_reservado_e_limite(
     data: String,
@@ -748,8 +753,8 @@ pub async fn buscar_total_reservado_e_limite(
     }))
 }
 
+//Aqui é a função que busca se já o restaurante esta lotado
 #[tauri::command]
-
 pub async fn verificar_lotacao_command(
     date: String,
     time_slot: String,

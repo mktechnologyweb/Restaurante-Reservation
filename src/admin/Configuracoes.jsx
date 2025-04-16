@@ -1,20 +1,35 @@
+
+// Este Importe permite o gerenciaamento do estado e os efeitos do componente.
 import { useState, useEffect } from "react";
+
+// Este Importe permite a navegação entre as páginas.
 import { Link, useNavigate } from "react-router-dom";
+
+// Importa a função do Tauri e chama comandos feitos no Rust.
 import { invoke } from "@tauri-apps/api/core";
+
+//Importa o css
 import "../Home.css";
 import "../Cadastrar.css";
 import "./Mesa.css";
 
+//Define o componente 
 function Configuracoes() {
+
+   //Obtem a função e navega entre as paginas
   const navigate = useNavigate();
+
+  //Recupera os dados do usuario
   const employeeName = localStorage.getItem("employeeName") || "Usuário";
   const employeePosition = localStorage.getItem("employeePosition") || "";
 
+  //Declara a inicialização dos dados 
   const [mesas, setMesas] = useState([]);
   const [tipoMesa, setTipoMesa] = useState("");
   const [cadeirasMesa, setCadeirasMesa] = useState(0);
   const [editandoMesaId, setEditandoMesaId] = useState(null);
 
+  //Declara a inicialização dos dados 
   const [horarios, setHorarios] = useState([]);
   const [horarioEditando, setHorarioEditando] = useState(null);
   const [horaAbertura, setHoraAbertura] = useState("");
@@ -35,15 +50,21 @@ function Configuracoes() {
   const [novaCapacidade, setNovaCapacidade] = useState(0);
   const [capacidadeOcupada, setCapacidadeOcupada] = useState(0);
 
+  //Busca e onta os daddos 
   useEffect(() => {
+    //chamada das funções
     buscarMesas();
     buscarHorarios();
     buscarCapacidade();
     buscarCapacidadeOcupada();
   }, []);
 
+  //Função para buscar as mesas
   async function buscarMesas() {
+
+     //Lida com os erros no rust
     try {
+      //Busca a função no rust 
       const resultado = await invoke("listar_mesas");
       setMesas(resultado);
     } catch (error) {
@@ -51,8 +72,13 @@ function Configuracoes() {
     }
   }
 
+  //Função para buscar os horarios
   async function buscarHorarios() {
+
+     //Lida com os erros no rust
     try {
+
+       //Busca a função no rust 
       const resultado = await invoke("listar_horarios");
       setHorarios(resultado);
     } catch (error) {
@@ -60,8 +86,12 @@ function Configuracoes() {
     }
   }
 
+  //Função para buscar a capacidade
   async function buscarCapacidade() {
+
+      //Lida com os erros no rust
     try {
+      //Busca a função no rust 
       const resultado = await invoke("obter_capacidade_total");
       setCapacidadeTotal(resultado);
     } catch (error) {
@@ -69,8 +99,13 @@ function Configuracoes() {
     }
   }
 
+  //Função para buscar se esta ocupada a capacidade
   async function buscarCapacidadeOcupada() {
+
+    //Lida com os erros no rust
     try {
+
+      //Busca a função no rust 
       const resultado = await invoke("obter_capacidade_ocupada");
       setCapacidadeOcupada(resultado);
     } catch (error) {
@@ -78,16 +113,22 @@ function Configuracoes() {
     }
   }
 
+  //Função para enviar os dados
   async function handleSubmit(e) {
     e.preventDefault();
+    //Lida com os erros no rust
     try {
       if (editandoMesaId) {
+
+        //Busca a função no rust 
         await invoke("editar_mesa", {
           id: editandoMesaId,
           tipo: tipoMesa,
           cadeiras: cadeirasMesa,
         });
       } else {
+
+        //Busca a função no rust 
         await invoke("cadastrar_mesa", {
           tipo: tipoMesa,
           cadeiras: cadeirasMesa,
@@ -102,15 +143,29 @@ function Configuracoes() {
     }
   }
 
+  //Inicia a edição
   function iniciarEdicao(mesa) {
+
+    //Informa o estado com o valor a ser eidtado
     setTipoMesa(mesa.tipo_tables);
+
+    //Informa o estado com a quantidade a ser eidtado
     setCadeirasMesa(mesa.quantity_chairs);
+
+    //Informa o estado do id a ser eidtado
     setEditandoMesaId(mesa.id_tables);
   }
 
+  //Função para excluir a mesa
   async function excluirMesa(id) {
+
+    //Pergunta se vai mesmo excluir
     if (!window.confirm("Deseja excluir esta mesa?")) return;
+
+    //Lida com os erros no rust
     try {
+
+      //Busca a função no rust 
       await invoke("excluir_mesa", { id });
       buscarMesas();
     } catch (error) {
@@ -118,8 +173,11 @@ function Configuracoes() {
     }
   }
 
+    //Função para cadastrar horario
   async function cadastrarHorario() {
+     //Lida com os erros no rust
     try {
+        //Busca a função no rust 
       await invoke("cadastrar_horario", {
         dayOfWeek: novoDia,
         openingTime: novoHorarioAbertura,
@@ -134,14 +192,21 @@ function Configuracoes() {
     }
   }
 
+  //Função para edição
   function iniciarEdicaoHorario(horario) {
+    //Define os estados
     setHorarioEditando(horario.day_of_week);
     setHoraAbertura(horario.opening_time);
     setHoraFechamento(horario.closing_time);
   }
 
+  //Função para salvar 
   async function salvarHorarioEditado() {
+
+     //Lida com os erros no rust
     try {
+
+       //Busca a função no rust 
       await invoke("editar_horario", {
         dayOfWeek: horarioEditando,
         openingTime: horaAbertura,
@@ -155,19 +220,27 @@ function Configuracoes() {
       console.error("Erro ao editar horário:", error);
     }
   }
-
+ //Função para excluir horario 
   async function excluirHorario(dayOfWeek) {
     if (!window.confirm("Deseja excluir este horário?")) return;
+
+    //Lida com os erros no rust
     try {
+
+      //Busca a função no rust 
       await invoke("excluir_horario", { dayOfWeek });
       buscarHorarios();
     } catch (error) {
       console.error("Erro ao excluir horário:", error);
     }
   }
-
+  //Função para atualizar
   async function atualizarCapacidade() {
+
+    //Lida com os erros no rust
     try {
+
+      //Busca a função no rust 
       await invoke("atualizar_capacidade_total", { novaCapacidade });
       setNovaCapacidade(0);
       buscarCapacidade();
@@ -176,16 +249,25 @@ function Configuracoes() {
     }
   }
 
+  //Funçao para remover os dados do funcionario para poder deslogar
   function handleLogout() {
     localStorage.clear();
     navigate("/");
   }
 
+  //É feito o calculo do índice da última mesa na página atual.
   const indexOfLastMesa = currentPage * mesasPerPage;
+
+  //É feito o calculo do índice da primeira mesa na página atual
   const indexOfFirstMesa = indexOfLastMesa - mesasPerPage;
+
+  //Aqui Cria um novo array contendo apenas as mesas da página atual
   const currentMesas = mesas.slice(indexOfFirstMesa, indexOfLastMesa);
+
+  ///É feito o calculo do número total de páginas necessárias para exibir todas as mesas
   const totalPages = Math.ceil(mesas.length / mesasPerPage);
 
+  //Retorna a estrutura do jsx
   return (
     <div className="home-container">
       <header className="header">
@@ -199,11 +281,11 @@ function Configuracoes() {
       <div className="main-content">
         <aside className="sidebar">
           <nav className="navigation">
-             {employeePosition === "Administrador" && (
-                                        <>
-                                           <Link to="/admin/dashboard">Daschboard</Link>
-                                        </>
-                                    )}
+            {employeePosition === "Administrador" && (
+              <>
+                <Link to="/admin/dashboard">Daschboard</Link>
+              </>
+            )}
             <Link to="/home">Buscar Clientes</Link>
             <Link to="/cadastrar">Cadastrar</Link>
             {employeePosition === "Administrador" && (
@@ -219,7 +301,7 @@ function Configuracoes() {
 
         <main className="content-area">
           <div className="content-grid">
-            {/* Mesas */}
+          
             <button className="toggle-section" onClick={() => setMostrarMesas(!mostrarMesas)}>
               {mostrarMesas ? "⯆ Ocultar Gerenciar Mesas" : "⯈ Gerenciar Mesas"}
             </button>
@@ -240,7 +322,7 @@ function Configuracoes() {
                     onChange={(e) => setCadeirasMesa(parseInt(e.target.value))}
                     required
                   />
-                  <button  type="submit">{editandoMesaId ? "Salvar Alterações" : "Cadastrar Mesa"}</button>
+                  <button type="submit">{editandoMesaId ? "Salvar Alterações" : "Cadastrar Mesa"}</button>
                 </form>
                 <table className="tabela-mesas">
                   <thead>
@@ -277,7 +359,7 @@ function Configuracoes() {
               </div>
             )}
 
-            {/* Horários */}
+
             <button className="toggle-section" onClick={() => setMostrarHorarios(!mostrarHorarios)}>
               {mostrarHorarios ? "⯆ Ocultar Gerenciar Horários" : "⯈ Gerenciar Horários"}
             </button>
@@ -333,7 +415,6 @@ function Configuracoes() {
               </div>
             )}
 
-            {/* Capacidade */}
             <button className="toggle-section" onClick={() => setMostrarCapacidade(!mostrarCapacidade)}>
               {mostrarCapacidade ? "⯆ Ocultar Capacidade Total" : "⯈ Capacidade Total"}
             </button>

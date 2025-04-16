@@ -17,26 +17,33 @@ import Configuracoes from "./admin/Configuracoes";
 import Dashboard from "./admin/Dashboard";
 
 function App() {
+     // Aqui é  onde vai controlar se o usuário está autenticado.
     const [authenticated, setAuthenticated] = useState(false);
-
+    //Monta o componente com a autenticação
     useEffect(() => {
+        //Verifica se em localStorage é true
       const isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
+      //Atualiza de acordo com a verificação
       setAuthenticated(isLoggedIn);
       console.log("App: isAuthenticated verificado. Valor:", isLoggedIn);
   }, []);
-
+    //Usa BrowserRouter para configurar o roteamento da aplicação.
     return (
         <Router>
             <Routes>
-                {/* inicia pelo login */}
+               {/* Define a rota para a página de login.que faz 
+               a verificação setAuthenticated e atualiza o estado 
+               de autenticação. */}
                 <Route path="/" element={<Login setAuthenticated={setAuthenticated} />} />
 
-                {/* a pagina home so vai ter acesso quem estiver autenticado */}
+               {/* Define uma rota protegida para a página inicial caso
+                'authenticated' for verdadeiro, renderiza o componente Home
+                 se não manda de volta para a página de login. */}
                 <Route 
                     path="/home" 
                     element={authenticated ? <Home /> : <Navigate to="/" />} 
                 />
-
+                 {/* Apartir daqui define as rotas protegidas para as paginas*/}
                 <Route 
                     path="/trocar_senha" 
                     element={authenticated ? <TrocarSenha /> : <Navigate to="/" />} 
